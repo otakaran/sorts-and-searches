@@ -1,0 +1,28 @@
+# Compiled Code
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Virtual machine crash logs
+hs_err_pid*
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# BlueJ
+**/doc
+*.pkh
+*.ctxt
+*.bluej
+
+# OS Data Files
+.DS_Store
+
+# Extra
+#
