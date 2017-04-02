@@ -27,6 +27,18 @@ public class Sort
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y 
      */
+    public int mainMenu()
+    {
+        
+        return 0;
+    }
+    
+    /**
+     * An example of a method - replace this comment with your own
+     * 
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y 
+     */
     public int insertSort()
     {
         
@@ -65,7 +77,7 @@ public class Sort
      */
     public int main()
     {
-        
+        mainMenu();
         return 0;
     }
 }
