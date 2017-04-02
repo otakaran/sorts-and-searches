@@ -3,7 +3,7 @@
 [![Issue Count](https://codeclimate.com/github/otakar-sst/sorts-and-searches/badges/issue_count.svg)](https://codeclimate.com/github/otakar-sst/sorts-and-searches)
 [![Test Coverage](https://codeclimate.com/github/otakar-sst/sorts-and-searches/badges/coverage.svg)](https://codeclimate.com/github/otakar-sst/sorts-and-searches/coverage)
 [![codebeat badge](https://codebeat.co/badges/abaa0109-54d3-4536-b28c-965f13cf8357)](https://codebeat.co/projects/github-com-otakar-sst-sorts-and-searches-master)
-###### A program that checks RNA similarity coded in Java for CSA
+###### A program that sorts integers using different algorithms coded in Java for CSA
 ![Image of Abstract Search](https://d13yacurqjgara.cloudfront.net/users/891352/screenshots/2651893/svg-search.gif)
 
 
