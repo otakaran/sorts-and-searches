@@ -1,7 +1,6 @@
 // Import statements
 import java.util.Scanner;
 import java.io.*;
-import java.io.File;
 
 /**
  * Sort contain a number of methods that sort a file of comma seperated integers into correct
@@ -157,7 +156,7 @@ public class Sort
      */
     public static int[] insertSort(int[] input)
     {
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
         int temp;
         for (int i = 1; i < input.length; i++) 
         {
@@ -173,7 +172,7 @@ public class Sort
             }
         }
         // Calculate execution time
-        long endTime = System.nanoTime();
+        long endTime = System.currentTimeMillis();
         long duration = (endTime - startTime);
         System.out.print(duration);
 
@@ -238,7 +237,7 @@ public class Sort
      */
     public static int[] selectionSort(int[] input)
     {
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
         for (int i = 0; i < input.length - 1; i++)
         {
             int index = i;
@@ -255,7 +254,7 @@ public class Sort
             input[i] = smallerNumber;
         }
         // Calculate execution time
-        long endTime = System.nanoTime();
+        long endTime = System.currentTimeMillis();
         long duration = (endTime - startTime);
 
         System.out.print(duration);
@@ -269,7 +268,7 @@ public class Sort
      */
     public static int[] bubbleSort(int[] input)
     {
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
         int j;
         boolean swap = true;   // set flag to true to begin first pass
         int temp;   //holding variable
@@ -290,7 +289,7 @@ public class Sort
                 } 
             } 
         } 
-        long endTime = System.nanoTime();
+        long endTime = System.currentTimeMillis();
         long duration = (endTime - startTime);
         System.out.print(duration);
         return input;
@@ -323,9 +322,9 @@ public class Sort
                 int[] result = insertSort(data);
                 getValues(result);
                 break;
-                case 2:  long startTime = System.nanoTime();
+                case 2:  long startTime = System.currentTimeMillis();
                 int[] result2 = mergeSort(data);
-                long endTime = System.nanoTime();
+                long endTime = System.currentTimeMillis();
                 long duration = (endTime - startTime);
                 System.out.print("\nSort time (ns): ");
                 System.out.print(duration);
@@ -339,61 +338,77 @@ public class Sort
                 int[] result4 = bubbleSort(data);
                 getValues(result4);
                 break;
-                // this nasty code block makes a table with the sorting times for all files
+                
+                // This nasty code block makes a table with the sorting times for all files
                 case 5:  
-                System.out.println("Algorithm       Insert Sort       Merge Sort       Selection Sort       Bubble Sort");
-                System.out.print("File 1          ");
+                System.out.println("\nTime in (MS)       File 1       File 2       File 3");
+                
+                // Get all files
                 int[] data1 = scanFile(1);
+                int[] data2 = scanFile(2);
+                int[] data3 = scanFile(3);
+                int[] data4 = scanFile(4);
+                
+                // Insert sort
+                System.out.print("Insert             ");
                 insertSort(data1);
-                System.out.print("        ");
-                long startTime1 = System.nanoTime();
+                System.out.print("            ");
+                insertSort(data2);
+                System.out.print("           ");
+                insertSort(data3);
+                System.out.print("         ");
+                //insertSort(data4);
+                System.out.println();
+                
+                // Merge sort
+                System.out.print("Merge              ");
+                long startTime1 = System.currentTimeMillis();
                 mergeSort(data1);
-                long endTime1 = System.nanoTime();
+                long endTime1 = System.currentTimeMillis();
                 long duration1 = (endTime1 - startTime1);
                 System.out.print(duration1);
-                System.out.print("         ");
-                selectionSort(data1);
-                System.out.print("          ");
-                bubbleSort(data1);
-                System.out.print("\nFile 2          ");
-                int[] data2 = scanFile(2);
-                insertSort(data2);
-                System.out.print("        ");
-                long startTime2 = System.nanoTime();
+                System.out.print("            ");
+                long startTime2 = System.currentTimeMillis();
                 mergeSort(data2);
-                long endTime2 = System.nanoTime();
+                long endTime2 = System.currentTimeMillis();
                 long duration2 = (endTime2 - startTime2);
                 System.out.print(duration2);
-                System.out.print("         ");
-                selectionSort(data2);
-                System.out.print("          ");
-                bubbleSort(data2);
-                System.out.print("\nFile 3          ");
-                int[] data3 = scanFile(3);
-                insertSort(data3);
-                System.out.print("        ");
-                long startTime3 = System.nanoTime();
+                System.out.print("            ");
+                long startTime3 = System.currentTimeMillis();
                 mergeSort(data3);
-                long endTime3 = System.nanoTime();
+                long endTime3 = System.currentTimeMillis();
                 long duration3 = (endTime3 - startTime3);
                 System.out.print(duration3);
-                System.out.print("         ");
+                System.out.print("           ");
+                //long startTime4 = System.currentTimeMillis();
+                //mergeSort(data4);
+                //long endTime4 = System.currentTimeMillis();
+                //long duration4 = (endTime4 - startTime4);
+                //System.out.print(duration4);
+                System.out.println();
+                
+                // Selection sort
+                System.out.print("Selection          ");
+                selectionSort(data1);
+                System.out.print("            ");
+                selectionSort(data2);
+                System.out.print("           ");
                 selectionSort(data3);
-                System.out.print("          ");
-                bubbleSort(data3);
-                System.out.print("\nFile 4          ");
-                int[] data4 = scanFile(4);
-                insertSort(data4);
-                System.out.print("        ");
-                long startTime4 = System.nanoTime();
-                mergeSort(data4);
-                long endTime4 = System.nanoTime();
-                long duration4 = (endTime4 - startTime4);
-                System.out.print(duration4);
                 System.out.print("         ");
-                selectionSort(data4);
-                System.out.print("          ");
-                bubbleSort(data4);
+                //selectionSort(data4);
+                System.out.println();
+                
+                // Bubble sort
+                System.out.print("Bubble             ");
+                selectionSort(data1);
+                System.out.print("            ");
+                selectionSort(data2);
+                System.out.print("           ");
+                selectionSort(data3);
+                System.out.print("         ");
+                //selectionSort(data4);
+                System.out.println("\n");
+                
                 break;
                 default: sorting = false;
                 break;
