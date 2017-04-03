@@ -45,14 +45,15 @@ public class Sort
             System.out.println("#  3. Selection Sort    #");
             System.out.println("#  4. Bubble Sort       #");
             System.out.println("#  5. All of the Above  #");
+            System.out.println("#  6. Exit              #");
             System.out.println("#########################\n");
-            System.out.println("Type the integer [1-5] that represents your selection followed by {RETURN}.");
+            System.out.println("Type the integer [1-6] that represents your selection followed by {RETURN}.");
             // Scan for user input
             Scanner scan = new Scanner(System.in);
             selection = Integer.valueOf(scan.nextLine());
             scan.close();
             // Check for valid input, if input is valid break the loop, if invalid let the user know and scan again
-            if (selection == 1 || selection == 2 || selection == 3 || selection == 4 || selection == 5)
+            if (selection == 1 || selection == 2 || selection == 3 || selection == 4 || selection == 5 || selection == 6)
             {
                 noSelection = false;
             }
@@ -126,7 +127,6 @@ public class Sort
             default: System.out.println("Bad input.");
             break;
         }
-        System.out.println();
         try
         {
             Scanner scan = new Scanner(new File(inputFile)).useDelimiter(",");
@@ -162,6 +162,7 @@ public class Sort
             System.out.print(input[input.length - i]);
             System.out.print(", ");
         } 
+        System.out.println();
     }
 
     /**
@@ -279,6 +280,7 @@ public class Sort
      */
     public static int[] bubbleSort(int[] input)
     {
+        long startTime = System.nanoTime();
         int j;
         boolean flag = true;   // set flag to true to begin first pass
         int temp;   //holding variable
@@ -297,6 +299,10 @@ public class Sort
                 } 
             } 
         } 
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.print(duration);
         return input;
     } 
 
@@ -307,76 +313,100 @@ public class Sort
      */
     public static void main(String args[])
     {
-        // Get the selection from the menu
-        int algorithmSelection = selectAlgorithm();
-        // Get the selection for file length
-        int fileSelection = selectFile();
-        // Scan selected file
-        int[] data = scanFile(fileSelection);
-        // Call the sorting algorithm that the user identified previously
-        switch (algorithmSelection) 
+        boolean sorting = true;
+        int fileSelection = 1;
+        while (sorting)
         {
-            case 1:  System.out.print("Sort time (ns): ");
-            int[] result = insertSort(data);
-            getValues(result);
-            break;
-            case 2:  long startTime = System.nanoTime();
-            int[] result2 = mergeSort(data);
-            long endTime = System.nanoTime();
-            long duration = (endTime - startTime);
-            System.out.print("\nSort time (ns): ");
-            System.out.print(duration);
-            getValues(result2);
-            break;
-            case 3:  System.out.print("Sort time (ns): ");
-            int[] result3 = selectionSort(data);
-            getValues(result3);
-            break;
-            case 4:  System.out.print("Sort time (ns): ");
-            int[] result4 = bubbleSort(data);
-            getValues(result4);
-            break;
-            case 5:  
-            System.out.print("Algorithm     Insert Sort     Merge Sort     Selection Sort     Bubble Sort");
-            System.out.print("File 1        ");
-            int[] data1 = scanFile(1);
-            insertSort(data1);
-            System.out.print("   ");
-            mergeSort(data1);
-            System.out.print("   ");
-            selectionSort(data1);
-            System.out.print("   ");
-            bubbleSort(data1);
-            System.out.print("\nFile 2        ");
-            int[] data2 = scanFile(2);
-            insertSort(data2);
-            System.out.print("   ");
-            mergeSort(data2);
-            System.out.print("   ");
-            selectionSort(data2);
-            System.out.print("   ");
-            bubbleSort(data2);
-            System.out.print("\nFile 3        ");
-            int[] data3 = scanFile(3);
-            insertSort(data3);
-            System.out.print("   ");
-            mergeSort(data3);
-            System.out.print("   ");
-            selectionSort(data3);
-            System.out.print("   ");
-            bubbleSort(data3);
-            System.out.print("\nFile 4        ");
-            int[] data4 = scanFile(4);
-            insertSort(data4);
-            System.out.print("   ");
-            mergeSort(data4);
-            System.out.print("   ");
-            selectionSort(data4);
-            System.out.print("   ");
-            bubbleSort(data4);
-            break;
-            default: System.out.println("Bad input.");
-            break;
+            // Get the selection from the menu
+            int algorithmSelection = selectAlgorithm();
+            // Get the selection for file length
+            if (algorithmSelection < 5)
+            {
+                fileSelection = selectFile();
+            }
+            // Scan selected file
+            int[] data = scanFile(fileSelection);
+            // Call the sorting algorithm that the user identified previously
+            switch (algorithmSelection) 
+            {
+                case 1:  System.out.print("Sort time (ns): ");
+                int[] result = insertSort(data);
+                getValues(result);
+                break;
+                case 2:  long startTime = System.nanoTime();
+                int[] result2 = mergeSort(data);
+                long endTime = System.nanoTime();
+                long duration = (endTime - startTime);
+                System.out.print("\nSort time (ns): ");
+                System.out.print(duration);
+                getValues(result2);
+                break;
+                case 3:  System.out.print("Sort time (ns): ");
+                int[] result3 = selectionSort(data);
+                getValues(result3);
+                break;
+                case 4:  System.out.print("Sort time (ns): ");
+                int[] result4 = bubbleSort(data);
+                getValues(result4);
+                break;
+                case 5:  
+                System.out.println("Algorithm       Insert Sort       Merge Sort       Selection Sort       Bubble Sort");
+                System.out.print("File 1          ");
+                int[] data1 = scanFile(1);
+                insertSort(data1);
+                System.out.print("        ");
+                long startTime1 = System.nanoTime();
+                mergeSort(data1);
+                long endTime1 = System.nanoTime();
+                long duration1 = (endTime1 - startTime1);
+                System.out.print(duration1);
+                System.out.print("         ");
+                selectionSort(data1);
+                System.out.print("          ");
+                bubbleSort(data1);
+                System.out.print("\nFile 2          ");
+                int[] data2 = scanFile(2);
+                insertSort(data2);
+                System.out.print("        ");
+                long startTime2 = System.nanoTime();
+                mergeSort(data2);
+                long endTime2 = System.nanoTime();
+                long duration2 = (endTime2 - startTime2);
+                System.out.print(duration2);
+                System.out.print("         ");
+                selectionSort(data2);
+                System.out.print("          ");
+                bubbleSort(data2);
+                System.out.print("\nFile 3          ");
+                int[] data3 = scanFile(3);
+                insertSort(data3);
+                System.out.print("        ");
+                long startTime3 = System.nanoTime();
+                mergeSort(data3);
+                long endTime3 = System.nanoTime();
+                long duration3 = (endTime3 - startTime3);
+                System.out.print(duration3);
+                System.out.print("         ");
+                selectionSort(data3);
+                System.out.print("          ");
+                bubbleSort(data3);
+                System.out.print("\nFile 4          ");
+                int[] data4 = scanFile(4);
+                insertSort(data4);
+                System.out.print("        ");
+                long startTime4 = System.nanoTime();
+                mergeSort(data4);
+                long endTime4 = System.nanoTime();
+                long duration4 = (endTime4 - startTime4);
+                System.out.print(duration4);
+                System.out.print("         ");
+                selectionSort(data4);
+                System.out.print("          ");
+                bubbleSort(data4);
+                break;
+                default: sorting = false;
+                break;
+            }
         }
     }
 }
