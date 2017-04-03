@@ -39,18 +39,20 @@ public class Sort
         while (noSelection)
         {
             // Print menu
-            System.out.println("#######################");
-            System.out.println("#  1. Insertion Sort  #");
-            System.out.println("#  2. Merge Sort      #");
-            System.out.println("#  3. Selection Sort  #");
-            System.out.println("#######################\n");
-            System.out.println("Type the integer [1-3] that represents your selection followed by {RETURN}.");
+            System.out.println("#########################");
+            System.out.println("#  1. Insertion Sort    #");
+            System.out.println("#  2. Merge Sort        #");
+            System.out.println("#  3. Selection Sort    #");
+            System.out.println("#  4. Bubble Sort       #");
+            System.out.println("#  5. All of the Above  #");
+            System.out.println("#########################\n");
+            System.out.println("Type the integer [1-5] that represents your selection followed by {RETURN}.");
             // Scan for user input
             Scanner scan = new Scanner(System.in);
             selection = Integer.valueOf(scan.nextLine());
             scan.close();
             // Check for valid input, if input is valid break the loop, if invalid let the user know and scan again
-            if (selection == 1 || selection == 2 || selection == 3)
+            if (selection == 1 || selection == 2 || selection == 3 || selection == 4 || selection == 5)
             {
                 noSelection = false;
             }
@@ -184,7 +186,6 @@ public class Sort
         // Calculate execution time
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
-        System.out.print("Sort time (ns): ");
         System.out.print(duration);
 
         return input;
@@ -266,12 +267,38 @@ public class Sort
         // Calculate execution time
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
-        System.out.print("Sort time (ns): ");
+
         System.out.print(duration);
 
         // Return proccessed array
         return input;
     }
+
+    /**
+     * An example of a method - replace this comment with your own
+     */
+    public static int[] bubbleSort(int[] input)
+    {
+        int j;
+        boolean flag = true;   // set flag to true to begin first pass
+        int temp;   //holding variable
+
+        while ( flag )
+        {
+            flag= false;    //set flag to false awaiting a possible swap
+            for( j=0;  j < input.length -1;  j++ )
+            {
+                if ( input[ j ] < input[j+1] )   // change to > for ascending sort
+                {
+                    temp = input[ j ];                //swap elements
+                    input[ j ] = input[ j+1 ];
+                    input[ j+1 ] = temp;
+                    flag = true;              //shows a swap occurred  
+                } 
+            } 
+        } 
+        return input;
+    } 
 
     /**
      * Main method that calls sorting algorithms
@@ -289,7 +316,8 @@ public class Sort
         // Call the sorting algorithm that the user identified previously
         switch (algorithmSelection) 
         {
-            case 1:  int[] result = insertSort(data);
+            case 1:  System.out.print("Sort time (ns): ");
+            int[] result = insertSort(data);
             getValues(result);
             break;
             case 2:  long startTime = System.nanoTime();
@@ -300,8 +328,52 @@ public class Sort
             System.out.print(duration);
             getValues(result2);
             break;
-            case 3:  int[] result3 = selectionSort(data);
+            case 3:  System.out.print("Sort time (ns): ");
+            int[] result3 = selectionSort(data);
             getValues(result3);
+            break;
+            case 4:  System.out.print("Sort time (ns): ");
+            int[] result4 = bubbleSort(data);
+            getValues(result4);
+            break;
+            case 5:  
+            System.out.print("Algorithm     Insert Sort     Merge Sort     Selection Sort     Bubble Sort");
+            System.out.print("File 1        ");
+            int[] data1 = scanFile(1);
+            insertSort(data1);
+            System.out.print("   ");
+            mergeSort(data1);
+            System.out.print("   ");
+            selectionSort(data1);
+            System.out.print("   ");
+            bubbleSort(data1);
+            System.out.print("\nFile 2        ");
+            int[] data2 = scanFile(2);
+            insertSort(data2);
+            System.out.print("   ");
+            mergeSort(data2);
+            System.out.print("   ");
+            selectionSort(data2);
+            System.out.print("   ");
+            bubbleSort(data2);
+            System.out.print("\nFile 3        ");
+            int[] data3 = scanFile(3);
+            insertSort(data3);
+            System.out.print("   ");
+            mergeSort(data3);
+            System.out.print("   ");
+            selectionSort(data3);
+            System.out.print("   ");
+            bubbleSort(data3);
+            System.out.print("\nFile 4        ");
+            int[] data4 = scanFile(4);
+            insertSort(data4);
+            System.out.print("   ");
+            mergeSort(data4);
+            System.out.print("   ");
+            selectionSort(data4);
+            System.out.print("   ");
+            bubbleSort(data4);
             break;
             default: System.out.println("Bad input.");
             break;
