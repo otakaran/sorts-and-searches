@@ -103,43 +103,63 @@ public class Sort
      */
     public static int[] scanFile(int selection)
     {
-        int [] rip = new int [100];
+        int [] data = new int [10000];
+        int i = 0;
+        int length = 0;
         String inputFile = "";
         switch (selection) 
         {
             case 1:  inputFile = "input/input1.txt";
+            length = 1000;
             break;
             case 2:  inputFile = "input/input2.txt";
+            length = 10000;
             break;
             case 3:  inputFile = "input/input3.txt";
+            length = 100000;
             break;
             case 4:  inputFile = "input/input4.txt";
+            length = 1000000;
             break;
             default: System.out.println("Bad input.");
             break;
         }
-        System.out.println(new File(inputFile).getAbsoluteFile());
+        System.out.println();
         try
         {
-            Scanner scan = new Scanner(new File(inputFile));
-            int [] data = new int [100];
-            int i = 0;
+            Scanner scan = new Scanner(new File(inputFile)).useDelimiter(",");
+            int[] array = new int[length];
             while(scan.hasNextInt())
             {
-                data[i++] = scan.nextInt();
+                array[i++] = scan.nextInt();
+                //System.out.println(array[i-1]);
             }
-            return data;
+            return array;
         }
         catch (FileNotFoundException exception)
         {
             System.out.println("The file was not found.");
         }
-        catch (IOException exception)
-        {
-            System.out.println(exception);
-        }
+        return null;
+    }
 
-        return rip;
+    /**
+     * An example of a method - replace this comment with your own
+     */
+    public static void getValues(int[] input)
+    {
+        System.out.print("\nThe 10 lowest values: ");
+        for (int i = 0; i < 10; i++)
+        {
+            System.out.print(input[i]);
+            System.out.print(", ");
+        }
+        System.out.print("\nThe 10 highest values: ");
+        for (int i = 1; i < 11; i++)
+        {
+            System.out.print(input[input.length - i]);
+            System.out.print(", ");
+        } 
     }
 
     /**
@@ -147,6 +167,7 @@ public class Sort
      */
     public static int[] insertSort(int[] input)
     {
+        long startTime = System.nanoTime();
         int temp;
         for (int i = 1; i < input.length; i++) 
         {
@@ -160,6 +181,11 @@ public class Sort
                 }
             }
         }
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.print("Sort time (ns): ");
+        System.out.print(duration);
+
         return input;
     }
 
@@ -175,10 +201,32 @@ public class Sort
     /**
      * An example of a method - replace this comment with your own
      */
-    public static int selectionSort()
+    public static int[] selectionSort(int[] input)
     {
+        long startTime = System.nanoTime();
+        for (int i = 0; i < input.length - 1; i++)
+        {
+            int index = i;
+            for (int j = i + 1; j < input.length; j++)
+            {
+                if (input[j] < input[index]) 
+                {
+                    index = j;
+                }
+            }
 
-        return 0;
+            int smallerNumber = input[index];  
+            input[index] = input[i];
+            input[i] = smallerNumber;
+        }
+        // Calculate execution time
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.print("Sort time (ns): ");
+        System.out.print(duration);
+        
+        // Return proccessed array
+        return input;
     }
 
     /**
@@ -194,14 +242,17 @@ public class Sort
         int fileSelection = selectFile();
         // Scan selected file
         int[] data = scanFile(fileSelection);
-        // All the sorting algorithm that the user identified previously
+        // Call the sorting algorithm that the user identified previously
         switch (algorithmSelection) 
         {
-            case 1:  insertSort(data);
+            case 1:  int[] result = insertSort(data);
+            getValues(result);
             break;
-            case 2:  mergeSort();
+            case 2:  //int[] result2 = mergeSort();
+            //getValues(result2);
             break;
-            case 3:  selectionSort();
+            case 3:  int[] result3 = selectionSort(data);
+            getValues(result3);
             break;
             default: System.out.println("Bad input.");
             break;
