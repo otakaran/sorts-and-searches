@@ -2,6 +2,7 @@
 import java.util.Scanner;
 import java.io.*;
 import java.io.File;
+
 /**
  * Sort contain a number of methods that sort a file of comma seperated integers into correct
  * using different algorithms.
@@ -12,23 +13,8 @@ import java.io.File;
  */
 public class Sort
 {
-    // Instance variables
-    private int x;
-
     /**
-     * Constructor for objects of class Sort
-     */
-    public Sort()
-    {
-        // Initialise instance variables
-        x = 0;
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
+     * Algorithm selector menu
      */
     public static int selectAlgorithm()
     {
@@ -65,6 +51,9 @@ public class Sort
         return selection;
     }
 
+    /**
+     * File selector menu
+     */
     public static int selectFile()
     {
         int selection = 0;
@@ -99,14 +88,13 @@ public class Sort
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * File scanner method
      * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
+     * @param  selection   a sample parameter for a method
+     * @return     data from selected file
      */
     public static int[] scanFile(int selection)
     {
-        int [] data = new int [10000];
         int i = 0;
         int length = 0;
         String inputFile = "";
@@ -134,7 +122,6 @@ public class Sort
             while(scan.hasNextInt())
             {
                 array[i++] = scan.nextInt();
-                //System.out.println(array[i-1]);
             }
             return array;
         }
@@ -146,7 +133,7 @@ public class Sort
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Get 10 smallest and largest values
      */
     public static void getValues(int[] input)
     {
@@ -162,11 +149,11 @@ public class Sort
             System.out.print(input[input.length - i]);
             System.out.print(", ");
         } 
-        System.out.println();
+        System.out.println("\n");
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Insertion sort
      */
     public static int[] insertSort(int[] input)
     {
@@ -178,6 +165,7 @@ public class Sort
             {
                 if(input[j] < input[j-1])
                 {
+                    // Insert the new value
                     temp = input[j];
                     input[j] = input[j-1];
                     input[j-1] = temp;
@@ -193,10 +181,11 @@ public class Sort
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Merge sort
      */
     public static int[] mergeSort(int[] input) {
-        if (input.length <= 1) {
+        if (input.length <= 1) 
+        {
             return input;
         }
 
@@ -206,7 +195,7 @@ public class Sort
         System.arraycopy(input, 0, first, 0, first.length);
         System.arraycopy(input, first.length, second, 0, second.length);
 
-        // Sort each half
+        // Sort each half [RECURSION!]
         mergeSort(first);
         mergeSort(second);
 
@@ -216,36 +205,36 @@ public class Sort
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Merge sort helper
      */
     public static void merge(int[] first, int[] second, int [] result) {
-        // Merge both halves into the result array
         // Next element to consider in the first array
-        int iFirst = 0;
+        int firstElement = 0;
         // Next element to consider in the second array
-        int iSecond = 0;
-
-        // Next open position in the result
+        int secondElement = 0;
         int j = 0;
-        // As long as neither iFirst nor iSecond is past the end, move the
-        // smaller element into the result.
-        while (iFirst < first.length && iSecond < second.length) {
-            if (first[iFirst] < second[iSecond]) {
-                result[j] = first[iFirst];
-                iFirst++;
-            } else {
-                result[j] = second[iSecond];
-                iSecond++;
+        // As long as neither first nor second is past the end, move the smaller element into the result.
+        while (firstElement < first.length && secondElement < second.length) 
+        {
+            if (first[firstElement] < second[secondElement]) 
+            {
+                result[j] = first[firstElement];
+                firstElement++;
+            } 
+            else 
+            {
+                result[j] = second[secondElement];
+                secondElement++;
             }
             j++;
         }
-        // copy what's left
-        System.arraycopy(first, iFirst, result, j, first.length - iFirst);
-        System.arraycopy(second, iSecond, result, j, second.length - iSecond);
+        // Copy The remiander
+        System.arraycopy(first, firstElement, result, j, first.length - firstElement);
+        System.arraycopy(second, secondElement, result, j, second.length - secondElement);
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Selection Sort
      */
     public static int[] selectionSort(int[] input)
     {
@@ -276,30 +265,31 @@ public class Sort
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Bubble sort
      */
     public static int[] bubbleSort(int[] input)
     {
         long startTime = System.nanoTime();
         int j;
-        boolean flag = true;   // set flag to true to begin first pass
+        boolean swap = true;   // set flag to true to begin first pass
         int temp;   //holding variable
 
-        while ( flag )
+        while (swap)
         {
-            flag= false;    //set flag to false awaiting a possible swap
-            for( j=0;  j < input.length -1;  j++ )
+            swap = false;    //set flag to false awaiting a possible swap
+            for(j = 0; j < input.length - 1; j++)
             {
-                if ( input[ j ] < input[j+1] )   // change to > for ascending sort
+                if (input[j] < input[j+1])
                 {
-                    temp = input[ j ];                //swap elements
-                    input[ j ] = input[ j+1 ];
-                    input[ j+1 ] = temp;
-                    flag = true;              //shows a swap occurred  
+                    temp = input[j];                
+                    // Swap elements
+                    input[j] = input[j+1];
+                    input[j+1] = temp;
+                    // A swap occurred 
+                    swap = true;              
                 } 
             } 
         } 
-
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         System.out.print(duration);
@@ -349,6 +339,7 @@ public class Sort
                 int[] result4 = bubbleSort(data);
                 getValues(result4);
                 break;
+                // this nasty code block makes a table with the sorting times for all files
                 case 5:  
                 System.out.println("Algorithm       Insert Sort       Merge Sort       Selection Sort       Bubble Sort");
                 System.out.print("File 1          ");
