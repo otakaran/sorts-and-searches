@@ -181,6 +181,7 @@ public class Sort
                 }
             }
         }
+        // Calculate execution time
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         System.out.print("Sort time (ns): ");
@@ -192,10 +193,53 @@ public class Sort
     /**
      * An example of a method - replace this comment with your own
      */
-    public static int mergeSort()
-    {
+    public static int[] mergeSort(int[] input) {
+        if (input.length <= 1) {
+            return input;
+        }
 
-        return 0;
+        // Split the array in half
+        int[] first = new int[input.length / 2];
+        int[] second = new int[input.length - first.length];
+        System.arraycopy(input, 0, first, 0, first.length);
+        System.arraycopy(input, first.length, second, 0, second.length);
+
+        // Sort each half
+        mergeSort(first);
+        mergeSort(second);
+
+        // Merge the halves together, overwriting the original array
+        merge(first, second, input);
+        return input;
+    }
+
+    /**
+     * An example of a method - replace this comment with your own
+     */
+    public static void merge(int[] first, int[] second, int [] result) {
+        // Merge both halves into the result array
+        // Next element to consider in the first array
+        int iFirst = 0;
+        // Next element to consider in the second array
+        int iSecond = 0;
+
+        // Next open position in the result
+        int j = 0;
+        // As long as neither iFirst nor iSecond is past the end, move the
+        // smaller element into the result.
+        while (iFirst < first.length && iSecond < second.length) {
+            if (first[iFirst] < second[iSecond]) {
+                result[j] = first[iFirst];
+                iFirst++;
+            } else {
+                result[j] = second[iSecond];
+                iSecond++;
+            }
+            j++;
+        }
+        // copy what's left
+        System.arraycopy(first, iFirst, result, j, first.length - iFirst);
+        System.arraycopy(second, iSecond, result, j, second.length - iSecond);
     }
 
     /**
@@ -224,7 +268,7 @@ public class Sort
         long duration = (endTime - startTime);
         System.out.print("Sort time (ns): ");
         System.out.print(duration);
-        
+
         // Return proccessed array
         return input;
     }
@@ -248,8 +292,13 @@ public class Sort
             case 1:  int[] result = insertSort(data);
             getValues(result);
             break;
-            case 2:  //int[] result2 = mergeSort();
-            //getValues(result2);
+            case 2:  long startTime = System.nanoTime();
+            int[] result2 = mergeSort(data);
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime);
+            System.out.print("\nSort time (ns): ");
+            System.out.print(duration);
+            getValues(result2);
             break;
             case 3:  int[] result3 = selectionSort(data);
             getValues(result3);
