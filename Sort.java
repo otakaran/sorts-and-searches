@@ -97,6 +97,7 @@ public class Sort
         int i = 0;
         int length = 0;
         String inputFile = "";
+        // Select which file should be scanned
         switch (selection) 
         {
             case 1:  inputFile = "input/input1.txt";
@@ -114,6 +115,7 @@ public class Sort
             default: System.out.println("Bad input.");
             break;
         }
+        // Scan the given file, returning an error if the file does not exist
         try
         {
             Scanner scan = new Scanner(new File(inputFile)).useDelimiter(",");
@@ -156,6 +158,7 @@ public class Sort
      */
     public static int[] insertSort(int[] input)
     {
+        // Begin algorithm timer
         long startTime = System.currentTimeMillis();
         int temp;
         for (int i = 1; i < input.length; i++) 
@@ -164,7 +167,7 @@ public class Sort
             {
                 if(input[j] < input[j-1])
                 {
-                    // Insert the new value
+                    // Insert the new value, moving as many values as necessary
                     temp = input[j];
                     input[j] = input[j-1];
                     input[j-1] = temp;
@@ -183,14 +186,18 @@ public class Sort
      * Merge sort
      */
     public static int[] mergeSort(int[] input) {
+        // Is the input is 1 there is nothing to sort
         if (input.length <= 1) 
         {
             return input;
         }
 
         // Split the array in half
+        // Creates two new arrays of langth based on the old array
         int[] first = new int[input.length / 2];
         int[] second = new int[input.length - first.length];
+        // Copy-spit the old array into the two new arrays
+        // Format is: arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
         System.arraycopy(input, 0, first, 0, first.length);
         System.arraycopy(input, first.length, second, 0, second.length);
 
@@ -207,12 +214,12 @@ public class Sort
      * Merge sort helper
      */
     public static void merge(int[] first, int[] second, int [] result) {
-        // Next element to consider in the first array
+        // Next/First element to consider in the first array
         int firstElement = 0;
-        // Next element to consider in the second array
+        // Next/Firs element to consider in the second array
         int secondElement = 0;
         int j = 0;
-        // As long as neither first nor second is past the end, move the smaller element into the result.
+        // As long are we are within the bounds of the arrays, move the smaller element into the result
         while (firstElement < first.length && secondElement < second.length) 
         {
             if (first[firstElement] < second[secondElement]) 
@@ -220,6 +227,7 @@ public class Sort
                 result[j] = first[firstElement];
                 firstElement++;
             } 
+            // Otherwise the second array's value is greater, copy it to the result
             else 
             {
                 result[j] = second[secondElement];
@@ -227,7 +235,7 @@ public class Sort
             }
             j++;
         }
-        // Copy The remiander
+        // Copy the remiander
         System.arraycopy(first, firstElement, result, j, first.length - firstElement);
         System.arraycopy(second, secondElement, result, j, second.length - secondElement);
     }
@@ -237,10 +245,13 @@ public class Sort
      */
     public static int[] selectionSort(int[] input)
     {
+        // Begin timer
         long startTime = System.currentTimeMillis();
+        // Loop for the whole data
         for (int i = 0; i < input.length - 1; i++)
         {
             int index = i;
+            // Loop until we find the next lowest number
             for (int j = i + 1; j < input.length; j++)
             {
                 if (input[j] < input[index]) 
@@ -248,15 +259,15 @@ public class Sort
                     index = j;
                 }
             }
-
+            // Move the smallest value 
             int smallerNumber = input[index];  
             input[index] = input[i];
             input[i] = smallerNumber;
         }
+        
         // Calculate execution time
         long endTime = System.currentTimeMillis();
         long duration = (endTime - startTime);
-
         System.out.print(duration);
 
         // Return proccessed array
@@ -268,16 +279,18 @@ public class Sort
      */
     public static int[] bubbleSort(int[] input)
     {
+        // Begin timer
         long startTime = System.currentTimeMillis();
         int j;
-        boolean swap = true;   // set flag to true to begin first pass
-        int temp;   //holding variable
-
+        boolean swap = true;
+        int temp;
         while (swap)
         {
-            swap = false;    //set flag to false awaiting a possible swap
+            swap = false;    
+            // Swap is false unless we find a new swap possible
             for(j = 0; j < input.length - 1; j++)
             {
+                // If one value is larger we swap it
                 if (input[j] < input[j+1])
                 {
                     temp = input[j];                
@@ -289,6 +302,7 @@ public class Sort
                 } 
             } 
         } 
+        // End calculation time
         long endTime = System.currentTimeMillis();
         long duration = (endTime - startTime);
         System.out.print(duration);
@@ -318,7 +332,7 @@ public class Sort
             // Call the sorting algorithm that the user identified previously
             switch (algorithmSelection) 
             {
-                case 1:  System.out.print("Sort time (ns): ");
+                case 1:  System.out.print("Sort time (MS): ");
                 int[] result = insertSort(data);
                 getValues(result);
                 break;
@@ -326,15 +340,15 @@ public class Sort
                 int[] result2 = mergeSort(data);
                 long endTime = System.currentTimeMillis();
                 long duration = (endTime - startTime);
-                System.out.print("\nSort time (ns): ");
+                System.out.print("\nSort time (MS): ");
                 System.out.print(duration);
                 getValues(result2);
                 break;
-                case 3:  System.out.print("Sort time (ns): ");
+                case 3:  System.out.print("Sort time (MS): ");
                 int[] result3 = selectionSort(data);
                 getValues(result3);
                 break;
-                case 4:  System.out.print("Sort time (ns): ");
+                case 4:  System.out.print("Sort time (MS): ");
                 int[] result4 = bubbleSort(data);
                 getValues(result4);
                 break;
